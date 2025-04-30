@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auto Reply Generator - Wedding WO</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #ff6b6b; text-align: center; }
+        textarea { 
+            width: 100%; 
+            height: 200px; 
+            padding: 10px; 
+            border: 2px solid #ddd; 
+            border-radius: 8px; 
+            font-size: 16px;
+        }
+        button { 
+            background: #25D366; 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin: 10px 5px;
+        }
+        .output { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            margin-top: 20px;
+        }
+        #waLink { text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>💌 Wedding WO Reply Generator</h1>
+    
+    <textarea id="clientData" placeholder="Paste data klien di sini...">
+New Client
+Tanggapan #11168
+Form Request Price List
+Nama : Ismi
+Beritahu kami PL acara apa yang kamu butuhkan : Prewedding
+Pilih tanggal atau tanggal dan waktu : 10-06-2025,19:00
+Alamat Acara Kegiatan : Jakarta
+Pertanyaan khusus : Mau tanya untuk pricelist prewed indoor dan outdoor
+    </textarea>
+    
+    <button onclick="generateReply()">✨ Generate Reply</button>
+    
+    <div class="output">
+        <h3>📝 Template Reply:</h3>
+        <p id="replyOutput" style="white-space: pre-line;"></p>
+        <button onclick="copyToClipboard()">📋 Copy Text</button>
+        <a id="waLink" target="_blank"><button style="background: #075E54;">💬 Kirim via WA</button></a>
+    </div>
+
+    <script>
+        function generateReply() {
+            const data = document.getElementById('clientData').value;
+            
+            // Ekstrak data
+            const nama = data.match(/Nama : (.+)/)[1];
+            const jenis = data.match(/kamu butuhkan : (.+)/)[1];
+            const tanggal = data.match(/waktu : (.+)/)[1];
+            const lokasi = data.match(/Kegiatan : (.+)/)[1];
+            const pertanyaan = data.match(/khusus : (.+)/)?.[1] || '-';
+
+            const reply = `Halo kak ${nama.trim()} 👋\n\nTerima kasih sudah menghubungi kami untuk paket *${jenis.trim()}*.\n\n📅 Tanggal: ${tanggal.trim()}\n📍 Lokasi: ${lokasi.trim()}\n\nUntuk pertanyaan:\n"${pertanyaan.trim()}"\n\nKami sudah lampirkan pricelist-nya di bawah ini:\n[LINK PRICELIST]\n\nAda yang mau kami bantu jelaskan lebih detail? 😊\n\n*Best Regards,*\n[Your WO Name]`;
+            
+            document.getElementById('replyOutput').innerText = reply;
+            document.getElementById('waLink').href = `https://wa.me/?text=${encodeURIComponent(reply)}`;
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('replyOutput').innerText;
+            navigator.clipboard.writeText(text);
+            alert("✅ Copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
